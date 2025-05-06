@@ -1,9 +1,9 @@
 import random
 import time
 
-# ------------------------------
+# *****************************
 # Geração de tabuleiro com bloqueios aprimorado (7% a 13%)
-# ------------------------------
+# *****************************
 def gerar_tabuleiro_com_bloqueios_melhorado(n, num_bloqueios=None, seed=None, percentual_max=0.13):
     if seed is not None:
         random.seed(seed)
@@ -27,9 +27,9 @@ def gerar_tabuleiro_com_bloqueios_melhorado(n, num_bloqueios=None, seed=None, pe
 
     return tabuleiro, bloqueios
 
-# ------------------------------
+# *****************************
 # Funções para o Algoritmo Genético com Elitismo e Minirepair
-# ------------------------------
+# *****************************
 
 def inicializar_populacao(n, bloqueios, tam_pop, seed=None):
     if seed is not None:
@@ -59,7 +59,6 @@ def fitness(individuo):
 
 
 def minirepair(individuo, bloqueios, max_iters=5):
-    # Ajusta até max_iters posições para reduzir conflitos
     for _ in range(max_iters):
         conflicts = [(i, individuo[i]) for i in range(len(individuo)) if any(
             individuo[i] == individuo[j] or abs(individuo[i]-individuo[j]) == abs(i-j)
@@ -121,7 +120,6 @@ def algoritmo_genetico(n, bloqueios, tam_pop=100, geracoes=2000, pc=0.8, pm=0.2,
         # Ordena por fitness decrescente para elitismo
         pop_sorted = [ind for _, ind in sorted(zip(fit_vals, pop), key=lambda x: x[0], reverse=True)]
         nova_pop = pop_sorted[:elitismo_k]  # preserva elites
-        # Gera o restante
         while len(nova_pop) < tam_pop:
             p1 = tournament_selection(pop, fit_vals)
             p2 = tournament_selection(pop, fit_vals)
@@ -135,9 +133,9 @@ def algoritmo_genetico(n, bloqueios, tam_pop=100, geracoes=2000, pc=0.8, pm=0.2,
 
     return melhor_sol, historico
 
-# ------------------------------
-# Testes para diferentes tamanhos 
-# ------------------------------
+# *****************************
+# Testes para diferentes tamanhos
+# *****************************
 def main():
     testes = [1,2,5,8,9,10,12,16,20] 
     resultados = []
@@ -150,11 +148,33 @@ def main():
         gens = hist[-1][0]
         resultados.append((n, sucesso, gens, f"{tempo:.2f} ms"))
         print(f"n={n} | Solução: {sucesso} | Gerações: {gens} | Tempo: {tempo:.2f} ms")
-    # Exibir tabela
     print("\nTabela de resultados:")
     print("n | Solução Encontrada | Gerações Usadas | Tempo")
     for r in resultados:
         print(f"{r[0]:>3} | {str(r[1]):^17} | {r[2]:>14} | {r[3]:>10}")
 
+# *****************************
+# Testes com até 1000 execuções
+# *****************************
+def testar_limite_n():
+    testes = [8, 12, 16, 20,]  
+    max_execucoes = 1000
+    for n in testes:
+        sucesso_count = 0
+        for execucao in range(max_execucoes):
+            tab, bloqueios = gerar_tabuleiro_com_bloqueios_melhorado(n, seed=42 + execucao)
+            sol, hist = algoritmo_genetico(n, bloqueios, tam_pop=200, geracoes=2000, seed=42 + execucao)
+            if sol is not None and fitness(sol) == n*(n-1)//2:
+                sucesso_count += 1
+        print(f"n={n} | Sucesso em {sucesso_count}/{max_execucoes} execuções")
+
+# *****************************
+# Seleção de modo de execução
+# *****************************
 if __name__ == '__main__':
-    main()
+    modo = input("Digite '1' para testes padrão ou '2' para testar limite de n (1000 execuções): ")
+    if modo == '2':
+        testar_limite_n()
+    else:
+        main()
+
