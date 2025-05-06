@@ -55,20 +55,4 @@ O algoritmo genético demonstrou ser mais eficaz que algoritmos como A*, especia
    python algoritmo_genetico.py
    ```
 
-## 📊 Resultados Obtidos
 
-| n  | Solução Encontrada | Gerações Usadas | Tempo      |
-|----|--------------------|------------------|------------|
-| 1  | True               | 1                | ~3.06 ms   |
-| 2  | False              | 2000             | ~56.59 ms  |
-| 5  | True               | 14               | ~37.27 ms  |
-| 8  | True               | 15               | ~53.65 ms  |
-| 9  | True               | 2                | ~51.71 ms  |
-| 10 | True               | 4                | ~64.13 ms  |
-| 12 | True               | 1                | ~63.67 ms  |
-| 16 | True               | 1                | ~104.79 ms |
-| 20 | True               | 2                | ~138.58 ms |
-
-## 📝 Licença
-
-Este projeto está licenciado sob a Licença MIT.
