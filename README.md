@@ -52,7 +52,7 @@ O algoritmo genético demonstrou ser mais eficaz que algoritmos como A*, especia
 
 4. Execute o arquivo principal diretamente pelo terminal ou pelo botão "Run":
    ```bash
-   python algoritmo_genetico.py
+   python NRainhas_AG.py
    ```
 
 
